@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.expo/
+web-build/
+
+# Config files
+*.config.js
+metro.config.js
+
+# Generated files
+coverage/
+*.log
+*.tgz
+*.tar.gz
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
