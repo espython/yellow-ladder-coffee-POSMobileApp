@@ -30,7 +30,9 @@ export const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
   // State management
   const [currentOrder, setCurrentOrder] = useState<OrderItem[]>([]);
   const [selectedDrink, setSelectedDrink] = useState<DrinkItem | null>(null);
-  const [selectedSize, setSelectedSize] = useState<DrinkSize | null>(null);
+  const [selectedSize, setSelectedSize] = useState<
+    DrinkSize | undefined | null
+  >(null);
   const [quantity, setQuantity] = useState(1);
   const [showSizeModal, setShowSizeModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,9 +93,10 @@ export const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
     if (existingItemIndex >= 0) {
       // Update existing item quantity
       const updatedOrder = [...currentOrder];
+      const existingItem = updatedOrder[existingItemIndex] as OrderItem;
       updatedOrder[existingItemIndex] = {
-        ...updatedOrder[existingItemIndex],
-        quantity: updatedOrder[existingItemIndex].quantity + quantity,
+        ...existingItem,
+        quantity: existingItem.quantity + quantity,
       };
       setCurrentOrder(updatedOrder);
     } else {
