@@ -10,7 +10,7 @@ import Toast, {
   ErrorToast,
   InfoToast,
 } from "react-native-toast-message";
-import { DrinkSelectionScreen } from "@/screens/DrinkSelectionScreen";
+import DrinkSelectionScreen from "@/screens/DrinkSelectionScreen";
 import { useNetworkStatus } from "@/hooks/useNetworkStatus";
 import { OfflineQueueService } from "@/services/offlineQueue";
 

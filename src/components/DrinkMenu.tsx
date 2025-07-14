@@ -1,5 +1,12 @@
 import React from "react";
-import { ScrollView, View, Text, RefreshControl } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  RefreshControl,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import DrinkCard from "./DrinkCard";
 import type { DrinkItem } from "@/types";
 
@@ -9,6 +16,7 @@ interface DrinkMenuProps {
   refreshing: boolean;
   onRefresh: () => void;
   children?: React.ReactNode;
+  contentContainerStyle?: StyleProp<ViewStyle>;
 }
 
 export const DrinkMenu: React.FC<DrinkMenuProps> = ({
@@ -17,6 +25,7 @@ export const DrinkMenu: React.FC<DrinkMenuProps> = ({
   refreshing,
   onRefresh,
   children,
+  contentContainerStyle,
 }) => {
   return (
     <ScrollView
@@ -25,6 +34,7 @@ export const DrinkMenu: React.FC<DrinkMenuProps> = ({
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={contentContainerStyle}
     >
       {/* Menu Header */}
       <View className="py-4">

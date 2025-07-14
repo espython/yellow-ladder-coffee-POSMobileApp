@@ -5,8 +5,8 @@ import type { OrderItem as OrderItemType } from "@/types";
 
 interface OrderItemProps {
   item: OrderItemType;
-  onUpdateQuantity: (id: string, quantity: number) => void;
-  onRemove: (id: string) => void;
+  onUpdateQuantity: (change: number) => void;
+  onRemove: () => void;
 }
 
 export const OrderItem: React.FC<OrderItemProps> = ({
@@ -30,7 +30,7 @@ export const OrderItem: React.FC<OrderItemProps> = ({
         {/* Quantity Controls */}
         <View className="flex-row items-center mr-3">
           <TouchableOpacity
-            onPress={() => onUpdateQuantity(item.id, item.quantity - 1)}
+            onPress={() => onUpdateQuantity(-1)}
             className="w-8 h-8 bg-gray-200 rounded-full items-center justify-center"
           >
             <Text className="text-gray-700 font-bold">−</Text>
@@ -39,7 +39,7 @@ export const OrderItem: React.FC<OrderItemProps> = ({
             {item.quantity}
           </Text>
           <TouchableOpacity
-            onPress={() => onUpdateQuantity(item.id, item.quantity + 1)}
+            onPress={() => onUpdateQuantity(1)}
             className="w-8 h-8 bg-primary-500 rounded-full items-center justify-center"
           >
             <Text className="text-white font-bold">+</Text>
@@ -52,7 +52,7 @@ export const OrderItem: React.FC<OrderItemProps> = ({
         </Text>
 
         {/* Remove Button */}
-        <TouchableOpacity onPress={() => onRemove(item.id)} className="p-1">
+        <TouchableOpacity onPress={onRemove} className="p-1">
           <Text className="text-error-500 text-lg">🗑️</Text>
         </TouchableOpacity>
       </View>

@@ -11,13 +11,13 @@ import type { DrinkItem, OrderItem, DrinkSize, Order } from "@/types";
 import HeaderSection from "@/components/HeaderSection";
 import OfflineQueueStatus from "@/components/OfflineQueueStatus";
 import DrinkMenu from "@/components/DrinkMenu";
-import SizeSelectionModal from "@/components/SizeSelectionModal";
+import SizeSelectionModal from "@/components/SizeSelectionModal"; // Fix import statement
 import OrderSummary from "@/components/OrderSummary";
 import { DRINKS_DATA } from "@/utils/constants";
 
 interface DrinkSelectionScreenProps {}
 
-export const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
+const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
   // State management
   const [currentOrder, setCurrentOrder] = useState<OrderItem[]>([]);
   const [selectedDrink, setSelectedDrink] = useState<DrinkItem | null>(null);
@@ -195,7 +195,17 @@ export const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
         onRefresh={fetchDrinks}
       />
 
-      {/* Size Selection Modal */}
+      {/* Order Summary - Always at bottom */}
+      <OrderSummary
+        orderItems={currentOrder}
+        isSubmitting={isSubmitting}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+        onSubmitOrder={handleSubmitOrder}
+        onClearOrder={handleClearOrder}
+      />
+
+      {/* Size Selection Modal - Now rendered last to ensure proper z-index */}
       <SizeSelectionModal
         visible={showSizeModal}
         drink={selectedDrink}
@@ -205,16 +215,6 @@ export const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
         onQuantityChange={handleQuantityChange}
         onClose={() => setShowSizeModal(false)}
         onAddToOrder={handleAddToOrder}
-      />
-
-      {/* Order Summary */}
-      <OrderSummary
-        orderItems={currentOrder}
-        isSubmitting={isSubmitting}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onSubmitOrder={handleSubmitOrder}
-        onClearOrder={handleClearOrder}
       />
     </SafeAreaView>
   );
