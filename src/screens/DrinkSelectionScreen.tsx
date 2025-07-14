@@ -149,9 +149,10 @@ const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
           setCurrentOrder([]);
           showToast("success", "Order submitted successfully!");
         } else {
+          setCurrentOrder([]);
           showToast(
-            "error",
-            `Order submission failed: ${response.message || "Unknown error"}`,
+            "info",
+            "Order couldn't be submitted online, but has been saved for later synchronization.",
           );
         }
       } else {
@@ -161,7 +162,11 @@ const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
       }
     } catch (error) {
       console.error("Error submitting order:", error);
-      showToast("error", "Failed to submit order. Please try again.");
+      setCurrentOrder([]);
+      showToast(
+        "warning",
+        "Order saved for later synchronization due to connection issues.",
+      );
     } finally {
       setIsSubmitting(false);
     }

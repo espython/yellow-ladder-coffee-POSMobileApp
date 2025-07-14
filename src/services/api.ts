@@ -98,10 +98,55 @@ export class ApiService {
 
     console.log("📤 Submitting order:", order.id, orderPayload);
 
-    return this.makeRequest<CreateOrderResponse>("/orders", {
-      method: "POST",
-      body: JSON.stringify(orderPayload),
-    });
+    try {
+      const response = await this.makeRequest<CreateOrderResponse>("/orders", {
+        method: "POST",
+        body: JSON.stringify(orderPayload),
+      });
+
+      if (!response.success) {
+        console.log(
+          `🔄 Order submission failed, adding to offline queue: ${order.id}`,
+        );
+
+        // Prepare order for offline queue with appropriate status
+        const offlineOrder: Order = {
+          ...order,
+          status: "pending",
+          isOffline: true,
+          retryCount: 0,
+        };
+
+        // Add to offline queue
+        const { StorageService } = await import("./storage");
+        await StorageService.addOfflineOrder(offlineOrder);
+      }
+
+      return response;
+    } catch (error) {
+      console.error("❌ Order submission error:", error);
+
+      // Handle unexpected errors
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error occurred";
+
+      // Prepare order for offline queue with appropriate status
+      const offlineOrder: Order = {
+        ...order,
+        status: "pending",
+        isOffline: true,
+        retryCount: 0,
+      };
+
+      // Add to offline queue
+      const { StorageService } = await import("./storage");
+      await StorageService.addOfflineOrder(offlineOrder);
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    }
   }
 
   // Health Check
