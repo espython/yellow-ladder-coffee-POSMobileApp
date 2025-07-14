@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Modal, TouchableOpacity } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "./Button";
 import { formatPrice } from "@/utils/constants";
 import type { DrinkItem, DrinkSize } from "@/types";
@@ -25,6 +26,8 @@ export const SizeSelectionModal: React.FC<SizeSelectionModalProps> = ({
   onClose,
   onAddToOrder,
 }) => {
+  const insets = useSafeAreaInsets();
+
   if (!drink) return null;
 
   return (
@@ -35,7 +38,10 @@ export const SizeSelectionModal: React.FC<SizeSelectionModalProps> = ({
       onRequestClose={onClose}
     >
       <View className="flex-1 justify-end bg-black/40">
-        <View className="bg-white rounded-t-3xl p-6">
+        <View
+          className="bg-white rounded-t-3xl p-6"
+          style={{ paddingBottom: Math.max(insets.bottom + 16, 24) }}
+        >
           {/* Drink Info */}
           <View className="items-center pb-4">
             <Text className="text-3xl mb-1">{drink.emoji}</Text>

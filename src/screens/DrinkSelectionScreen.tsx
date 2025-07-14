@@ -151,7 +151,7 @@ export const DrinkSelectionScreen: React.FC<DrinkSelectionScreenProps> = () => {
         } else {
           showToast(
             "error",
-            `Order submission failed: ${response.error || "Unknown error"}`,
+            `Order submission failed: ${response.message || "Unknown error"}`,
           );
         }
       } else {

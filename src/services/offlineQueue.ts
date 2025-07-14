@@ -212,7 +212,7 @@ export class OfflineQueueService {
     total: number;
     pending: number;
     failed: number;
-    oldestOrder?: string | undefined;
+    oldestOrder?: string | any;
   }> {
     try {
       const offlineOrders = await StorageService.getOfflineOrders();
